@@ -1,0 +1,28 @@
+version: '3'
+services:
+  fitpage-backend:
+    container_name: fitpage-backend
+    build: .
+    image: fitpage-image
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+  mysql:
+    container_name: fitpage-mysql
+    image: mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=fitpage
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3001:3306
+    volumes:
+      - fitpage-mysql:/data/db
+volumes:
+  fitpage-mysql:
+  fitpage-app:
